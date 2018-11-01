@@ -42,7 +42,7 @@ class CommentInput extends Component {
       <div className='comment-field'>
         <span className='comment-field-name'>评论内容：</span>
         <div className='comment-field-input'>
-          <textarea value={this.state.content} onChange={this.handleContentChange.bind(this)} />
+          <textarea value={this.state.content} onChange={this.handleContentChange.bind(this)}  />
         </div>
       </div>
       <div className='comment-field-button'>
@@ -62,14 +62,9 @@ class CommentList extends Component {
     comments: []
   }
   render(){
-    const comments = [
-      {username: 'Jerry', content: 'Hello'},
-      {username: 'Tomy', content: 'World'},
-      {username: 'Lucy', content: 'Good'}
-    ]
     return (
       <div>
-        {comments.map((comment,i) => <Comment comment={comment} key={i} />)}
+        {this.props.comments.map((comment,i) => <Comment comment={comment} key={i} />)}
       </div>
     )
   }
@@ -97,6 +92,9 @@ class App extends Component {
   }
 
   handleSubmitComment (comment){
+    if (!comment) return
+    if (!comment.username) return alert('请输入用户名')
+    if (!comment.content) return alert('请输入评论内容')
     this.state.comments.push(comment)
     this.setState({
       comments: this.state.comments
